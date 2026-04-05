@@ -1,12 +1,13 @@
+import os
 import discord
 import requests
 import time
 import asyncio
 
 # Configurações
-DISCORD_TOKEN = 'SEU_DISCORD_TOKEN'
-CHANNEL_ID = 1490429626735001680
-CLUB_ID = '#2JV9UCVJY'
+DISCORD_TOKEN = os.environ.get('DISCORD_TOKEN')
+CHANNEL_ID = int(os.environ.get('CHANNEL_ID'))
+CLUB_ID = os.environ.get('CLUB_ID')
 
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
