@@ -1,12 +1,12 @@
-# main.py
 import discord
 import requests
 import time
+import asyncio
 
 # Configurações
 DISCORD_TOKEN = 'SEU_DISCORD_TOKEN'
 CHANNEL_ID = 123456789
-CLUB_ID = 'CLUB_ID_BRAWL_STARS'
+CLUB_ID = '#CLUBID'
 
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
@@ -23,7 +23,7 @@ async def on_message(message):
         return
     await message.channel.send(f"Nova mensagem: {message.content}")
 
-def monitor_brawl_stars():
+async def monitor_brawl_stars():
     while True:
         try:
             API_URL = f"https://api.brawlstars.com/v1/clubs/{CLUB_ID}/members"
@@ -37,7 +37,7 @@ def monitor_brawl_stars():
                     await channel.send(member['message'])
         except Exception as e:
             print(f"Erro: {e}")
-        time.sleep(60)
+        await asyncio.sleep(60)
 
 if __name__ == "__main__":
-    monitor_brawl_stars()
+    client.run(DISCORD_TOKEN)
