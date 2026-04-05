@@ -5,8 +5,8 @@ import asyncio
 
 # Configurações
 DISCORD_TOKEN = 'SEU_DISCORD_TOKEN'
-CHANNEL_ID = 123456789
-CLUB_ID = '#CLUBID'
+CHANNEL_ID = 1490429626735001680
+CLUB_ID = '#2JV9UCVJY'
 
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
