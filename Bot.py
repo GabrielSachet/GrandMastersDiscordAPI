@@ -25,11 +25,20 @@ async def on_message(message):
     await message.channel.send(f"Nova mensagem: {message.content}")
 
 async def monitor_brawl_stars():
+    retry_delay = 60  # Inicialmente 1 minuto
+    max_delay = 3600 # Máximo de 1 hora
+    
     while True:
         try:
             API_URL = f"https://api.brawlstars.com/v1/clubs/{CLUB_ID}/members"
             headers = {'Authorization': 'Bearer SEU_API_KEY'}
             response = requests.get(API_URL, headers=headers)
+
+            if response.status_code == 429:
+                print("Rate limiting detectado, esperando...")
+                await asyncio.sleep(300)
+                continue
+            
             data = response.json()
             
             for member in data['items']:
@@ -38,6 +47,8 @@ async def monitor_brawl_stars():
                     await channel.send(member['message'])
         except Exception as e:
             print(f"Erro: {e}")
+            retry_delay = min(retry_delay * 2, max_delay)
+            await asyncio.sleep(retry_delay + random.uniform(0, 5))
         await asyncio.sleep(300)
 
 if __name__ == "__main__":
