@@ -38,7 +38,7 @@ async def monitor_brawl_stars():
                     await channel.send(member['message'])
         except Exception as e:
             print(f"Erro: {e}")
-        await asyncio.sleep(60)
+        await asyncio.sleep(300)
 
 if __name__ == "__main__":
     client.run(DISCORD_TOKEN)
