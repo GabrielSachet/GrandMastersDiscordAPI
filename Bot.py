@@ -51,5 +51,17 @@ async def monitor_brawl_stars():
             await asyncio.sleep(retry_delay + random.uniform(0, 5))
         await asyncio.sleep(300)
 
+async def main():
+    try:
+        await client.start(DISCORD_TOKEN)
+    except discord.HTTPException as e:
+        if e.status == 429:  # Rate limited
+            retry_after = e.response.headers.get('Retry-After', 5)
+            print(f"Rate limitado! Aguardando {retry_after} segundos...")
+            await asyncio.sleep(float(retry_after))
+            await main()  # Tenta novamente
+        else:
+            raise
+
 if __name__ == "__main__":
-    client.run(DISCORD_TOKEN)
+    asyncio.run(main())
